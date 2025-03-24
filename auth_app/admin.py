@@ -28,4 +28,7 @@ for model in models:
         list_display=field_names,
         list_filter=field_names,
         search_fields=search_field_names,
+        list_per_page=9,
+
+
     )

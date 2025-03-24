@@ -32,7 +32,7 @@ class User(AbstractUser):
     )
 
     def __str__(self):
-        return {self.username}
+        return self.username or f"User_{self.id}"
    
 class UserProfile(models.Model):
     id=models.UUIDField(primary_key=True,editable=False,default=uuid.uuid4)

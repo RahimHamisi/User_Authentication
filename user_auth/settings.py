@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+from datetime import timedelta
 import environ
 import os
 from pathlib import Path
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
+    'graphql_jwt.refresh_token.apps.RefreshTokenConfig',
     'auth_app',
 ]
 
@@ -144,8 +146,14 @@ GRAPHENE={
 }
 
 AUTHENTICATION_BACKENDS=[
-    'graphql_jwt.backends.JSONWebToken.Backends',
+    'graphql_jwt.backends.JSONWebTokenBackend',
     'django.contrib.auth.backends.ModelBackend'
 ]
 
 AUTH_USER_MODEL = 'auth_app.User'
+GRAPHQL_JWT = {
+    "JWT_VERIFY_EXPIRATION": True,              
+    "JWT_LONG_RUNNING_REFRESH_TOKEN": True,    
+    "JWT_EXPIRATION_DELTA": timedelta(minutes=15), 
+    "JWT_REFRESH_EXPIRATION_DELTA": timedelta(days=1), 
+}
